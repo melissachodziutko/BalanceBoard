@@ -1,0 +1,56 @@
+// Put the LED on
+Wiimote2.BalanceBoard.LED = true
+Wiimote1.Led4= true
+
+
+
+// This may look really weird. What is X and Y is a question of opinion ;)
+// (1) For me, X should be handled by left/right when board is in normal position in front of TV. Glove PIE X is front/back.
+//               on/off LED
+//    +--------------------------+
+//    | FL                    FR |
+//    |     left        right    |
+//    | BL                    BR |
+//    +--------------------------+
+
+// (2) on/off button is IN FRONT, i.e. close to computer, else multiply by -1
+// Calibration (x and y offsets) are a bit strange. Seems to change over time also.
+// Finally, there is some Interaction with the Wiimote I don't understand.
+if (Wiimote2.BalanceBoard.FrontLeft > 200)
+Keyboard.V=  Wiimote2.BalanceBoard.FrontLeft
+endif
+if (Wiimote2.BalanceBoard.FrontRight > 200)
+Keyboard.C=  Wiimote2.BalanceBoard.FrontRight
+endif
+if (Wiimote2.BalanceBoard.BackLeft > 200)
+Keyboard.X=  Wiimote2.BalanceBoard.BackLeft
+endif
+if (Wiimote2.BalanceBoard.BackRight > 200)
+Keyboard.Z=  Wiimote2.BalanceBoard.BackRight
+endif
+if (Wiimote2.BalanceBoard.FrontLeft < 200)
+Keyboard.V=  false
+Keyboard.Slash=   false
+endif
+if (Wiimote2.BalanceBoard.FrontRight < 200)
+Keyboard.C=  false
+Keyboard.Slash=   false
+endif
+if (Wiimote2.BalanceBoard.BackLeft < 200)
+Keyboard.X=  false
+Keyboard.Slash=   false
+endif
+if (Wiimote2.BalanceBoard.BackRight < 200)
+Keyboard.Z=  false
+Keyboard.Slash=   false
+endif
+Keyboard.Slash = Wiimote1.A
+
+// When you stand on the board (in neutral position) things may be wrong. So you may to compensenate once you are on the board...
+// var.deltaX = (Wiimote2.BalanceBoard.JoyY - 0.20) / 25
+// var.deltaY = (Wiimote2.BalanceBoard.JoyX + 0.15) / 25
+
+
+debug = "BB= " + Wiimote2.HasBalanceBoard + " JoyX =" + Wiimote2.BalanceBoard.JoyX + " JoyY =" + Wiimote2.BalanceBoard.JoyY + " FL=" + Wiimote2.BalanceBoard.FrontLeft + " FR=" + Wiimote2.BalanceBoard.FrontRight + " BL=" + Wiimote2.BalanceBoard.BackLeft + " BR=" + Wiimote2.BalanceBoard.BackRight
+
+// debug = ('WiiBalance by Daniel K. Schneider tecfa.unige.ch, based on Sam Braidley www.wiiscript.co.uk')
